@@ -1,0 +1,57 @@
+{
+  "default_model": "gemini-2.5-flash-lite",
+  "default_temperature": 0.2,
+  "default_max_output_tokens": 2048,
+  "agents": [
+    {
+      "id": "slide1",
+      "prompt_path": "prompts/slide1_prompt.md",
+      "default_sheet": "DRE Saida",
+      "specs": [
+        {
+          "id": "lucroTrimestre",
+          "sheet": "DRE Saida",
+          "labels_range": "C3:K3",
+          "values_range": "C18:K18"
+        },
+        {
+          "id": "lucro9M",
+          "sheet": "DRE Saida",
+          "labels_range": "L3:M3",
+          "values_range": "L18:M18"
+        }
+      ]
+    },
+    {
+      "id": "slide2",
+      "prompt_path": "prompts/slide2_prompt.md",
+      "default_sheet": "DRE Saida",
+      "specs": [
+        {
+          "id": "lucroTrimestre",
+          "sheet": "DRE Saida",
+          "labels_range": "C3:K3",
+          "values_range": "C18:K18"
+        },
+        {
+          "id": "lucro9M",
+          "sheet": "DRE Saida",
+          "labels_range": "L3:M3",
+          "values_range": "L18:M18"
+        },
+        {
+          "id": "roeTrimestre",
+          "sheet": "DRE Saida",
+          "labels_range": "C3:K3",
+          "values_range": "C20:K20"
+        },
+        {
+          "id": "roe9M",
+          "sheet": "DRE Saida",
+          "labels_range": "L3:M3",
+          "values_range": "L20:M20"
+        }
+      ]
+    }
+  ]
+}

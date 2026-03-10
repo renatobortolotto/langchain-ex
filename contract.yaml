@@ -1,0 +1,45 @@
+serviceAccountName: my-service-account
+dnsBase: my-dns-base
+coeID: my-coe-id
+configmap:
+  variables:
+    PROJECT_ID: 
+      des: my-project-id
+      uat: my-project-id
+      prod: my-project-id
+    LOCATION: 
+      des: my-location
+      uat: my-location
+      prod: my-location
+    LOG_LEVEL:
+      des: my-log-level
+      uat: my-log-level
+      prod: my-log-level
+    GOOGLE_GENAI_USE_VERTEXAI:
+      des: "TRUE"
+      uat: "TRUE"
+      prod: "TRUE"
+    GOOGLE_CLOUD_PROJECT:
+      des: my-google-cloud-project
+      uat: my-google-cloud-project
+      prod: my-google-cloud-project
+    GOOGLE_CLOUD_REGION:
+      des: my-google-cloud-region
+      uat: my-google-cloud-region
+      prod: my-google-cloud-region
+    SLIDE_AGENTS_CONFIG_PATH:
+      des: config/slide_agents.json
+      uat: config/slide_agents.json
+      prod: config/slide_agents.json
+    AGENT_ENGINE_PROJECT_ID:
+      des: my-agent-engine-project-id
+      uat: my-agent-engine-project-id
+      prod: my-agent-engine-project-id
+    DD_ELIDE_REQUEST_LOG:
+      des: "TRUE"
+      uat: "TRUE"
+      prod: "TRUE"
+    DD_ELIDE_RESPONSE_LOG:
+      des: "TRUE"
+      uat: "TRUE"
+      prod: "TRUE" 
