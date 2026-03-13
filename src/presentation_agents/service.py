@@ -9,6 +9,10 @@ from typing import Any, Callable, Dict, List, Optional, Sequence
 from .json_utils import coerce_json
 from .xlsx_extract import ExtractSpec, extract_xlsx_bytes_to_dict, parse_specs_data
 
+SERVICE_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SERVICE_DIR.parents[1]
+DEFAULT_AGENTS_CONFIG = SERVICE_DIR / "config" / "slide_agents.json"
+
 
 @dataclass(frozen=True)
 class SlideAgentConfig:
@@ -31,17 +35,38 @@ class SlideAgentResult:
 InvokeAgentFn = Callable[[SlideAgentConfig, str], str]
 
 
+def _config_search_roots() -> tuple[Path, ...]:
+    roots: list[Path] = []
+    for root in (Path.cwd(), REPO_ROOT):
+        resolved = root.resolve()
+        if resolved not in roots:
+            roots.append(resolved)
+    return tuple(roots)
+
+
+def resolve_agents_config_path(path: str | Path | None = None) -> Path:
+    if path is None or not str(path).strip():
+        return DEFAULT_AGENTS_CONFIG.resolve()
+    else:
+        candidate = Path(path).expanduser()
+
+    if candidate.is_absolute():
+        return candidate.resolve()
+
+    for root in _config_search_roots():
+        resolved = (root / candidate).resolve()
+        if resolved.exists():
+            return resolved
+
+    return (Path.cwd() / candidate).resolve()
+
+
 def resolve_default_agents_path() -> Path:
-    here = Path(__file__).resolve()
-    for parent in [here.parent, *here.parents]:
-        candidate = parent / "config" / "slide_agents.json"
-        if candidate.exists():
-            return candidate
-    return Path("config") / "slide_agents.json"
+    return DEFAULT_AGENTS_CONFIG.resolve()
 
 
 def load_slide_agents(path: str | Path) -> List[SlideAgentConfig]:
-    config_path = Path(path).expanduser().resolve()
+    config_path = resolve_agents_config_path(path)
     raw = json.loads(config_path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValueError("slide_agents.json deve ser um objeto")

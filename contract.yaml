@@ -28,9 +28,9 @@ configmap:
       uat: my-google-cloud-region
       prod: my-google-cloud-region
     SLIDE_AGENTS_CONFIG_PATH:
-      des: config/slide_agents.json
-      uat: config/slide_agents.json
-      prod: config/slide_agents.json
+      des: src/presentation_agents/config/slide_agents.json
+      uat: src/presentation_agents/config/slide_agents.json
+      prod: src/presentation_agents/config/slide_agents.json
     AGENT_ENGINE_PROJECT_ID:
       des: my-agent-engine-project-id
       uat: my-agent-engine-project-id

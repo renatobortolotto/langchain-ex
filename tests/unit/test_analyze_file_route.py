@@ -82,22 +82,18 @@ class TestAnalyzeFileRoute(unittest.TestCase):
 class TestPresentationAgentsService(unittest.TestCase):
     def test_load_slide_agents(self):
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-        from src.presentation_agents.service import load_slide_agents
+        from src.presentation_agents.service import load_slide_agents, resolve_default_agents_path
 
-        agents = load_slide_agents(
-            Path(__file__).resolve().parents[2] / "config" / "slide_agents.json"
-        )
+        agents = load_slide_agents(resolve_default_agents_path())
 
         self.assertEqual([agent.id for agent in agents], ["slide1", "slide2"])
         self.assertTrue(all(agent.prompt_path.exists() for agent in agents))
 
     def test_analyze_workbook_merges_agent_payloads(self):
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-        from src.presentation_agents.service import analyze_workbook, load_slide_agents
+        from src.presentation_agents.service import analyze_workbook, load_slide_agents, resolve_default_agents_path
 
-        agents = load_slide_agents(
-            Path(__file__).resolve().parents[2] / "config" / "slide_agents.json"
-        )
+        agents = load_slide_agents(resolve_default_agents_path())
 
         def fake_invoke(agent, prompt):
             self.assertIn("Dados do workbook", prompt)

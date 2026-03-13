@@ -11,25 +11,25 @@ if str(REPO_ROOT) not in sys.path:
 from genai_framework.decorators import file_input_route  # type: ignore
 from genai_framework.models import FileInput  # type: ignore
 
-from src.presentation_agents.service import analyze_workbook, load_slide_agents, resolve_default_agents_path
+from src.presentation_agents.service import analyze_workbook, load_slide_agents, resolve_agents_config_path
 
 
 @file_input_route("analyze_file")
 def analyze_file(file: FileInput):
+    config_path = resolve_agents_config_path(os.getenv("SLIDE_AGENTS_CONFIG_PATH"))
     try:
-        config_path = os.getenv("SLIDE_AGENTS_CONFIG_PATH") or str(resolve_default_agents_path())
         agents = load_slide_agents(config_path)
         response, results = analyze_workbook(file.content, agents)
         return {
             "response": response,
             "meta": {
                 "agents": [result.agent_id for result in results],
-                "configPath": config_path,
+                "configPath": str(config_path),
             },
         }
     except Exception as exc:
         return {
             "error": "Falha ao processar o XLSX com os agentes por slide.",
             "details": str(exc),
-            "configPath": os.getenv("SLIDE_AGENTS_CONFIG_PATH") or str(resolve_default_agents_path()),
+            "configPath": str(config_path),
         }

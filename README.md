@@ -5,10 +5,10 @@ Servico de LLM para receber um `xlsx`, extrair os ranges necessarios por slide e
 ## Fluxo
 
 1. A rota `analyze_file` recebe o `xlsx`.
-2. `config/slide_agents.json` define um agente por slide.
+2. `src/presentation_agents/config/slide_agents.json` define um agente por slide.
 3. Cada agente:
    - extrai apenas os ranges configurados
-   - carrega seu prompt dedicado em `config/prompts/`
+   - carrega seu prompt dedicado em `src/presentation_agents/config/prompts/`
    - chama Gemini via LangChain `ChatVertexAI`
    - retorna apenas o trecho de JSON daquele slide
 4. O servico agrega tudo em um unico payload:
@@ -32,8 +32,8 @@ Servico de LLM para receber um `xlsx`, extrair os ranges necessarios por slide e
 
 - `src/routes/analyze_file.py`: rota corporativa de upload do `xlsx`
 - `src/presentation_agents/service.py`: orquestracao dos agentes por slide
-- `config/slide_agents.json`: configuracao dos agentes, modelos e specs
-- `config/prompts/*.md`: prompts individuais por slide
+- `src/presentation_agents/config/slide_agents.json`: configuracao dos agentes, modelos e specs
+- `src/presentation_agents/config/prompts/*.md`: prompts individuais por slide
 
 ## Configuracao
 
